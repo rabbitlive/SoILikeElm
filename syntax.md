@@ -27,7 +27,7 @@
 -}
 ```
 
-这里有一个小技巧，每个 Elm 程序员都应该知道的：
+这里有一个每个 Elm 程序员都应该知道的小技巧：
 
 ```elm
 {--}
@@ -35,7 +35,7 @@ add x y = x + y
 --}
 ```
 
-仅仅在第一行添加或移除 } 就可以将代码注释或解开注释！
+仅仅在第一行添加或移除`}`就可以将代码注释或解开注释！
 
 ## 字面量
 
@@ -52,11 +52,11 @@ False : Bool
 
 -- 多行字符串
 """
-保持 JSON 或内容中有“引号”时，他很有用
+在保持 JSON 格式或内容中有“引号”时，他很有用
 """
 ```
 
-字面量的典型操作：
+典型的字面量操作：
 
 ```elm
 True && not (True || False)
@@ -66,7 +66,7 @@ True && not (True || False)
 
 ## 列表
 
-这里的四种形式，都是相同的：
+这里有四种形式，他们都是相同的：
 
 ```elm
 [1..4]
@@ -81,7 +81,7 @@ True && not (True || False)
 if powerLevel > 9000 then "OVER 9000!!!" else "meh"
 ```
 
-如果你有多个条件分支，把他们链起来即可：
+如果你有多个条件分支，可以把他们链起来：
 
 ```elm
 if key == 40 then
@@ -111,7 +111,7 @@ case n of
   _ -> fib (n - 1) + fib (n - 2)
 ```
 
-在这里的所有模式对不齐是会受到惩罚的呦，么么哒~
+在这里的所有模式格式对不齐是会受到惩罚的呦，么么哒~
 
 ## 类型
 
@@ -119,11 +119,11 @@ case n of
 type List = Empty | Node Int List
 ```
 
-不明白这是什么意思么？读这里
+不明白这是什么意思？[读这里](http://elm-lang.org/guide/model-the-problem)
 
 ## 记录
 
-更多关于 Elm 记录系统的说明，查看这个，这个或者这个。
+更多关于 Elm 记录系统的说明，可以查看[this overview](http://elm-lang.org/docs/records)，[initial announcement](http://elm-lang.org/blog/announce/0.7)或是[this academic paper](http://research.microsoft.com/pubs/65409/scopedlabels.pdf)。
 
 ```elm
 point =                            -- 创建一个记录
@@ -174,17 +174,17 @@ squares =
 
 ## 中缀操作符
 
-你也可以创建自己的中缀操作符。中缀操作符的优先级从0到9，9是高级。默认的优先级就是9并且是左结合的。你可以自己设置，但是不能重写内建的操作符。
+你也可以创建自己的中缀操作符。中缀操作符的优先级从0到9，9是最高级。默认的优先级就是9并且是左结合的。你可以自己设置，但是不能重写内建的操作符。
 
 ```elm
 (?) : Maybe a -> a -> a
 (?) maybe default =
   Maybe.withDefault default maybe
   
-infixr 9 ?  
+infixr 9 ?
 ```
 
-使用 (<|) 和 (|>) 可以减少括号使用次数。他们是函数应用的别名。
+使用 (<|) 和 (|>) 可以减少括号的使用次数。他们是函数应用的别名。
 
 ```elm
 f <| x = fx
@@ -200,7 +200,7 @@ dot' =
 	|> scale 2		
 ```
 
-注：这玩意来自 F#,灵感来源于 Unix 管道。
+注：这玩意来自 F#,灵感来源于 Unix 的管道。
 
 与此相关的，(<<) 和 (>>) 是函数组合。
 
@@ -355,7 +355,7 @@ example.ports.time.unsubscribe(callback);
 example.ports.increment(41) === 42;
 ```
 
-更多的例子可以在这里和这里找到。
+更多的例子可以在[这里](https://github.com/evancz/elm-html-and-js)和[这里](https://gist.github.com/evancz/8521339)找到。
 
 Elm 有一些内建的port，自动完成一些必要的任务：
 
