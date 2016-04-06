@@ -19,7 +19,7 @@
 * [类型别名](#类型别名)
 * [JS FFI](#js-ffi)
 
-查看[learning resources](http://elm-lang.org/Learn.elm)中的教程和例子，来学习实际中是如何使用这些语法的。
+可以用[learning resources](http://elm-lang.org/Learn.elm)作为教程和例子来试试这些语法。
 
 ## 注释
 
