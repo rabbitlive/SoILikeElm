@@ -1,3 +1,5 @@
+from [Elm Syntax](http://elm-lang.org/docs/syntax)
+
 # Elm 语法
 
 这是一份简单的语法指南，他包括:
@@ -357,13 +359,13 @@ example.ports.increment(41) === 42;
 
 更多的例子可以在[这里](https://github.com/evancz/elm-html-and-js)和[这里](https://gist.github.com/evancz/8521339)找到。
 
-Elm 有一些内建的port，自动完成一些必要的任务：
+Elm 有一些内建的 port，自动完成一些必要的任务：
 
 * `title` 设置页面的标题，忽略空字串
 * `log` 将消息打印到开发者控制台
 * `redirect` 重定向到其他页面，忽略空字串
 
-处于试验中的port：
+处于试验中的 port：
 
 * `favicon` 设置页面的图标
 * `stdout` 打印输出在 node.js 和浏览器的 console
