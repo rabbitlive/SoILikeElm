@@ -1,10 +1,10 @@
-from [Elm Syntax](http://elm-lang.org/docs/syntax)
+翻自 [Elm Syntax](http://elm-lang.org/docs/syntax)
 
 # Elm 语法
 
 这是一份简单的语法指南，他包括:
 
-* 注释
+* [注释](#注释)
 * 字面量
 * 列表
 * 条件
@@ -18,6 +18,8 @@ from [Elm Syntax](http://elm-lang.org/docs/syntax)
 * 类型注解
 * 类型别名
 * JS FFI
+
+查看[learning resources](http://elm-lang.org/Learn.elm)中的教程和例子，来学习实际中是如何使用这些语法的。
 
 ## 注释
 
