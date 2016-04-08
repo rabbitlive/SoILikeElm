@@ -33,4 +33,21 @@ myTuple = ("the answer", 42, True)
 
 ## 函数
 
+`->`用于将函数中参数和返回值的类型分隔开。他有这明显的“到”的意思，例如，`String.length : String -> Int`，很显然，“String.length的类型是String到Int”。只需要像一个句子一样从左往右读就好了。哦，顺便一提，`String.length`意味着`length`函数在`String`模块中。无论何时，大写单词后面跟个点，表示他是个模块，并不是一个类型。
+
+有趣的是当出现多个箭头时，比如`update: Action -> Model -> Model`。这个函数取 Action 和一个 Model 作为参数（按照这个顺序），并且返回一个 Model。或者说“update 有一个 Action 到 Model 到 Model 的类型”。
+
+类型注释真正想要告诉你的其实关于_偏应用_的东东：你可以只给函数一些参数，这样会得到一个函数作为结果。你得到新函数的类型注释是原函数类型注释覆盖左侧之后的一部分。
+
+```elm
+example : Model -> Model
+example = update someAction
+```
+
+其实注释中隐藏了一对括号，我们也可以把他写为：`update : Action -> (Model -> Model)`。
+
+不需要去过多担心偏应用或是柯里化，太多新东西了。仅仅把最后一个箭头最为返回值，其他的作为函数的参数就好。
+
+## 高阶函数
+
 
