@@ -46,8 +46,35 @@ example = update someAction
 
 其实注释中隐藏了一对括号，我们也可以把他写为：`update : Action -> (Model -> Model)`。
 
-不需要去过多担心偏应用或是柯里化，太多新东西了。仅仅把最后一个箭头最为返回值，其他的作为函数的参数就好。
+不需要太去在意偏应用或是柯里化什么的，太多新东西了。仅仅把最后一个箭头最为返回值，其他的作为函数的参数就好。
 
 ## 高阶函数
 
+就像JavaScript那样，函数可以作为另一个函数的参数传递。（我们已经见到过柯里化是如何让他们返回函数的。）
 
+让我们看下专业定制版`List.map`函数，他取一个函数并且将他应用于列表的每个Float元素，然后返回一个新的Int列表作为结果。
+
+```elm
+specialMap : (Float -> Int) -> List Float -> List Int
+```
+
+第一个参数需要是一个函数，他去一个 Float 作为参数并且返回一个 Int。当读到这个注释时，你可能会对“Float 到 Int”一脸懵逼，先暂停一下。理解括号的重要性。他不同于`Int -> Float -> List Int -> List Float`，这个取的是两个数字和一个列表，但并不是一个函数。
+
+我们知道`round : Float -> Int`，所以我们可以这么写：
+
+```elm
+roundMap : List Float -> List Int
+roundMap = specialMap round
+```
+
+即便`roundMap`不带有任何参数，他的类型明显就是specialMap调用round后返回函数的类型，这要感谢柯里化。我们同样可以写为`roundMap xs = specialMap round xs`；这只是风格问题。
+
+## 类型变量
+
+如果你看过 List 库，会发现那其实并不是[List.map](http://package.elm-lang.org/packages/elm-lang/core/latest/List#map)的定义。相反，他有小写的类型名字，那就是类型变量：
+
+```elm
+List.map : (a -> b) -> List a -> List b
+```
+
+这意味这函数作用与任何类型的 a 和 b，在知道传递的参数是什么类型的时候，采取固定这些类型变量的值。
