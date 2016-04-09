@@ -71,10 +71,38 @@ roundMap = specialMap round
 
 ## 类型变量
 
-如果你看过 List 库，会发现那其实并不是[List.map](http://package.elm-lang.org/packages/elm-lang/core/latest/List#map)的定义。相反，他有小写的类型名字，那就是类型变量：
+如果你看过 List 库，会发现那其实并不是[List.map](http://package.elm-lang.org/packages/elm-lang/core/latest/List#map)的定义。相反，他有着小写的类型名字，那就是类型变量：
 
 ```elm
 List.map : (a -> b) -> List a -> List b
 ```
 
-这意味这函数作用与任何类型的 a 和 b，在知道传递的参数是什么类型的时候，采取固定这些类型变量的值。
+这里的类型变量意味着函数将作用于任何类型的 a 和 b，当我们在知道传递的参数具体是什么类型的时候，才会去固定这些类型变量的值。所以我们可以写为`(Float -> Int)`和一个`List Float`，或是`(String -> Action)`和一个`List String`等等。（比起JavaScript，使用类型变量更像是在做数学运算。）
+
+按照惯例，类型变量从a开始，虽然你可以用的其他小写字母。当有一个以上的类型变量时，偶尔也会使用其他字母或词来帮助理解。例如`Dict k v`告诉我们类型变量表示键和值。一个类型可以有任何的类型变量，但超过两个是很罕见的。
+
+类型变量可以让我们编写泛型代码，如列表和其他容器，可以用来容纳任何类型的值。每个特定的容器只能容纳一个类型，但你可以自由选择。然后可以用`List.map`遍历列表并应用一个函数，无需知道列表中放着些什么。仅仅在每个元素上应用的函数需要知道这些元素的类型。
+
+`List a`表示一个任意类型的列表，那仅仅是`List`又是什么的？他被称为一个类型构造器，但更好的回答是，他真的什么都不是。他并不能独自存在。最好把他想象成是列表的基类，有时会被类型变量替换成一个真正的类型。
+
+## 记录
+
+记录很想JS中的 object @todo。像JS一样，他们使用大括号。但不同于JS，记录的键和值之间使用等号；冒号用于记录的类型。下面是一个简单的记录：
+
+```elm
+point : { x : Float, y : Float }
+point = { x = 3.2, y = 2.5 }
+```
+
+大多数情况下，你需要知道记录的类型。但也有在写函数时用到记录的某些字段，忽略其他字段的情况。
+
+```elm
+planarDistance : { a | x : Float, y : Float } -> { b | x : Float, y : Float } -> Float
+planarDistance p1 p2 =
+  let dx = p2.x - p1.x
+      dy = p2.y - p1.y
+  in
+      sqrt (dx ^ 2 + dy ^ 2)
+```
+
+`{a |`表示为一个记录的类型的一部分。
