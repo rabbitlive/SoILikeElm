@@ -27,3 +27,24 @@ DOM 和其他框架层和类库都假定存在于用户和架构之间。
 非分形架构，非重复的部分是说有层次的构成部分参与者。
 
 ## Flux
+
+首先有必要提及的就是[Flux]()。虽说他并不是第一个单向数据流框架，但他确实是第一个被普及为好多人使用的框架。
+
+**组成部分：**
+
+* **Stores**： 管理数据和状态
+* **View**：由React组件组成的层次结构
+* **Action**： 创建一个由view触发的事件
+* **Dispatcher**： 事件总线，用于集中管理所有的action
+
+**特点：**
+
+* **Dispatcher**。因为这一个事件总线，他是单例的。所以许多Flux框架的变形直接将dispatcher去掉了，或者其他单向流框架没有一个等同与dispatcher的东西。
+
+* **仅仅view可以组合组件**。层次结构组合只发生在React组件，不是store，也不是action。一个React组件就是一个UI程序，通常不会写为Flux架构内部的一部分。因此，Flux不是分形结构，他的参与者是dispatcher和store。
+
+* **用户事件声明在render中**。换句话说，由React组件的`render()`函数处理与用户的交互：渲染和用户事件（如，`onClick={this.clickHandler}`）
+
+## Redux
+
+Redux是Flux的一个变形，他把单例dispatcher变成了单例store。
