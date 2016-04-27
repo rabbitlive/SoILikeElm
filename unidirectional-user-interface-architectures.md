@@ -47,4 +47,20 @@ DOM 和其他框架层和类库都假定存在于用户和架构之间。
 
 ## Redux
 
-Redux是Flux的一个变形，他把单例dispatcher变成了单例store。
+Redux是Flux的一个变形，在Redux中，单例dispatcher变成了单例store。store并不是从零构建出的，相反，他是由一个给定的reducer函数创建出的store工厂。
+
+
+**组成部分：**
+
+* **单例Stores**： 管理状态并且有一个`dispatch(action)`函数
+* **Provider**：一个Store的订阅者，接口是像React或Angular之类的视图框架
+* **Actions**： 创建一个由Provider上用户触发的事件
+* **Reducers**： 纯函数，将前一个状态和一个action得到一个新状态
+
+**特点：**
+
+* **stores工厂**。一个store是由`createStore()`工厂函数创建，作为参数传递给组合的reducer函数。他也是传递给一个元工厂`applyMiddleware()`中间件函数的参数。中间件是非常重要的`dispatch()`函数，用于链式调用。
+
+* **Providers**。Redux并不关心用什么view框架去做UI程序。他能够使用React，Angular或其他。在这个架构中，view就是一个UI程序。像Flux一样，Redux也不是分形结构，store是一个协调者。
+
+用户事件处理可以不放在render中声明，这取决与Provider。
