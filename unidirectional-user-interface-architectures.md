@@ -64,3 +64,46 @@ Redux是Flux的一个变形，在Redux中，单例dispatcher变成了单例store
 * **Providers**。Redux并不关心用什么view框架去做UI程序。他能够使用React，Angular或其他。在这个架构中，view就是一个UI程序。像Flux一样，Redux也不是分形结构，store是一个协调者。
 
 用户事件处理可以不放在render中声明，这取决与Provider。
+
+
+## BEST
+
+[Famous框架]()介绍了一个行为-时间-状态-树的MVC变种，Controller被分割成两个单向元素：行为和时间。
+
+**组成部分：**
+
+* **State**： 初始状态JSON形式的声明
+* **Tree**：声明了组件的层次组成
+* **Event**： 事件来监听tree状态的改变
+* **Behavior**：动态属性（树）依赖于state
+
+**特点：**
+
+* **多范式**。state和tree完全是声明式的。event是必要的。behavior是函数式的。一些部分是响应式的，另外一些是被动的（例如）。
+
+* **Behavior**。这篇文章中没有看到任何其他的结构，behavior将UI渲染从动态属性中分离出来。这些据说是不同的，tree组合成HTML，behavior组合成css。
+
+* **用户事件从渲染处声明**。BEST是不在render中附加用户事件处理的少数几个单向数据流框架之一。用户事件处理程序属于event，而不是tree。
+
+这个架构中的内容，view是一个tree，一个组件是一个behavior-event-tree-state元组。组建是UI程序，BEST是分形结构的。
+
+
+## MODEL-VIEW-UPDATE
+
+又被称为[Elm架构]()，Model-View-Update与Redux很相似，主要是因为后者是受此架构启发。这是一个纯函数式架构，因为他的主要语言是[Elm]()，一个web的函数式编程语言。
+
+
+**组成部分：**
+
+* **Model**： 定义state结构的类型
+* **View**：纯函数，用来渲染state
+* **Actions**：定义发送给mailboxes用户事件的类型
+* **Update**：纯函数，由前一个状态和action来产生一个新的状态
+
+**特点：**
+
+* **组合层次结构无处不在**。前面的架构只在view层可以组合层次，但是MVU架构中，组合也发生在Model，Update，每个Actions都可以嵌套Actions。
+
+* **组件可导出为组成部分**。因为组合结构无处不在，Elm架构中的一个组件包括了Model type，一个初始Model，一个View函数，一个Action type和一个Update函数。整个体系结构不存在偏离这种结构的组件。每个组件都是一个UI程序，并且他是分形的。
+
+

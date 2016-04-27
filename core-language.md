@@ -1,9 +1,15 @@
 
 # Core Language
 
+# 核心库
+
 This section will walk you through Elm's simple core language. The aim is to build a strong understanding of the basics so you have a good foundation when you start working with graphics and interactivity.
 
+这一章将带你进入 Elm 简单的和核心语言。他构建于简单易懂的基础，所以当开始图形和编程时，有一个好的开发环境
+
 To follow along [get everything installed](/install) and start up `elm repl` in the terminal. It should look like this:
+
+从下面的地址安装，然后再终端运行`elm repl`。看起来像这样：
 
 ```elm
 ---- elm repl 0.16.0 -----------------------------------------------------------
@@ -14,7 +20,11 @@ To follow along [get everything installed](/install) and start up `elm repl` in 
 
 The REPL prints out the type of every result, but **we will leave the type annotations off in this tutorial** for the sake of introducing concepts gradually.
 
+REPL 打印出每个结果的类型，但是**我们不会在这篇指南中介绍类型注释**
+
 We will cover [values](#values), [functions](#functions), [lists](#lists), [tuples](#tuples), and [records](#records) which all correspond pretty closely with structures in languages like JavaScript, Python, and Java.
+
+我们将介绍 值，函数，列表，元组和记录，他们的结构很想JavaScript，Python 和 Java。
 
 
 ## Values 值
