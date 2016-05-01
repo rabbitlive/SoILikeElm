@@ -1,19 +1,19 @@
-# 信号Signals
+# 信号 Signals
 
-这一章关于Signals，他包括:
+这一章关于信号，他包括:
 
-* 介绍 Elm 中的信号
-* 用`foldp`保持程序的状态
-* 信箱
+* signal 介绍
+* 使用`foldp`函数保持状态
+* mailboxs
 
-## 信号介绍
+## signal 介绍
 
-Elm 中，**Signals**是一个创建程序基本的构建块。你可以把signal想象成每个时刻都在改变的一个流。
+在Elm 中，**Signals**是创建应用程序的一个基本构建块。可以把一个 signal 想象成一个流，他的值每时每刻都在改变。
 
-Signals 可以被合并，转换和过滤。
+Signals 可以被合并，转换以及过滤。
 
 
-让我们来看一个基本的 signal：
+先我们来看一个基本的 signal：
 
 ```elm
 module Main (..) where
@@ -21,85 +21,81 @@ module Main (..) where
 import Html exposing (Html)
 import Mouse
 
+
 view : Int -> Html
 view x =
   Html.text (toString x)
+
 
 main : Signal.Signal Html
 main =
   Signal.map view Mouse.x
 ```
 
-[]()
+[https://github.com/sporto/elm-tutorial-assets/blob/master/code/020_signals/BasicMouse.elm](https://github.com/sporto/elm-tutorial-assets/blob/master/code/020_signals/BasicMouse.elm)
 
-如果在浏览器中运行这个例子，你将会看到易懂鼠标时`x`坐标值的变化。第一行我们从core导入了Html模块用来将x坐标值显示为Html。第二行导入了Mouse模块。他提供了用于鼠标工作的工具。
+在浏览器中运行这段代码，移动鼠标时就会看到`x`坐标值的变化。
+
+首先我们导入了`Html`模块，用他来将`x`坐标显示为 HTML。
+
+紧接着导入了`Mouse`模块。他提供了用于鼠标操作的工具。
 
 ### view
 
-view是一个函数，取一个整数返回一个HTML片段（`Int -> Html`）。
+`view`函数取一个整数作为参数并返回一段HTML（`Int -> Html`）。
 
-然而，`Html.text`需要的是一个字符串，所以我们必须将`x`转换成一个 string 。这就是toString函数要做的事情。
+不过，`Html.text`需要的是一个字符串，所以我们必须将`x`转为字符串。这要用到toString。
 
 ### main
 
-一个 Elm 的 main 函数可以返回一个**静态element**或是一个**signal**。这里的 main 返回一个`Html`的 signal （`Signal.Signal Html`）。这就是说，HTML可以随时间的变化而变化！
+Elm 程序的 main 函数比较特殊，他要求返回一个**静态元素**或是一个**信号**。这里的`main`返回的是挂载了`Html`的信号（`Signal.Signal Html`）。换句话说，我们的HTML可以随时间的变化而变化。
 
-要理解这是如何实现的，让我们分析一下上面程序的最后一行。
+要理解这是怎么做到的，让我们分析一下代码的最后一行（`Signal.map view Mouse.x`）。
 
 ### Mouse.x
 
-`Mouse.x`会在`x`坐标改变时给我们一个 signal 。这个 singal 有一个签名 `Signal.Signal Int`，表示这个 signal 携带一个整数。
+`Mouse.x`会在`x`改变时给我们一个signal 。这个信号的签名是`Signal.Signal Int`，他表示这个信号会携带一个整数。
 
 ### Signal.map
 
-`Signal.map`是一个转换和遍历一个 signal 为不同 signal 的函数。
+`Signal.map`是将一个信号转换为另一个信号的函数，类型签名是`Signal.map : (a -> result) -> Signal a -> Signal result`。让我们来分析一下：
 
-他的类型签名是`Signal.map : (a -> result) -> Signal a -> Signal result`。
+* 第一个参数是一个函数，他接收`a`类型的值，返回`result`类型的值。这个函数会将原信号携带的值转换为一个新值用作输出信号。
+* 第二个参数就是原信号，他的类型变量是`a`，和第一个参数中的`a`相同。
+* 返回类型是`Signal result`，表示输出的signal携带的类型是`result`。
 
-* 第一个参数是一个函数，他接收一个`a`类型的值，返回一个`result`类型的值。这个函数将原signal的值转换为输出signal的值@todo
+> **图示**：signal`A`通过`Signal.map`产生了signal`B`。产生信号中的值是原信号中值的两倍。
 
-* 第二个参数`Signal.map`是原signal，也就是说，要想转换signal，这个signal必须有一个`a`类型。
-
-* 输出的类型是`Signal.result`。表示输出的signal类型是`result`。
-
-> **图示**：我们有一个signal`A`。Signal.map产生第二个signal`B`。第二个 signal 产生的值是原signal的两倍。
-
-回到我们的例子：
+回到我们的例子中：
 
 ```elm
 Signal.map view Mouse.x
 ```
 
-上面的例子中，`view`函数用来转换或遍历函数，他取一个`Int`值并返回`Html`。
+`view`是用来转换的函数，他取一个`Int`并返回`Html`。
 
-第二个参数（`Mouse.x`）是一个`Int`值得 signal。
+第二个参数（`Mouse.x`）是一个有`Int`值的信号。
 
-结果是一个`Html`值的 signal，作为`main`函数输出，这正是我们想要的。
+结果正是我们想要的`Html`值的信号，作为`main`函数的输出。
 
-`Singal.map`返回一个新的 signal 并带有一个从原 singal 用转换函数转换来的值。作为原 signal 的变化，每个新值都被转换或映射到目标 signal 类型。
+`Singal.map`用转换函数将原信号转换成为一个新信号。当原信号发生变化时，信号中的值都会被转换到新信号中。
 
 
-这是map的另一个列子：
+这里是 map 的另一个例子：
 
 ```elm
 double x =
   x * 2
 
 doubleSignal =
-  Singal.map double Mouse.x
+  Signal.map double Mouse.x
 ```
 
-`double`是一个将输入值加倍的函数，这样看来，`doubleSignal`是一个将当前鼠标 x 坐标乘以 2 的 singal。
+`double`是一个将输入值加倍的函数，这样看来，`doubleSignal`就是一个将当前 x 坐标值乘 2 的信号。
 
-### 练习
+## 保持状态
 
-试着组合鼠标`x`坐标和上面的`doubleSignal`，当你移动鼠标时，你将看到 x 乘 2 的值。
-
-
-## 保持 state
-
-
-在上一章中，我们创建了一个简单的应用来显示当前鼠标`x`的坐标。当前状态作为输入值接受之后就被丢弃了。但是在大多数应用中，我们希望在用户交互时储存一些状态。
+上一章中，我们创建了一个简单的应用来显示当前鼠标`x`的坐标。当前状态作为输入值接受之后就被丢弃了。但是在大多数应用中，我们希望在用户交互时储存一些状态。
 
 让我们来创建一个应用跟踪鼠标单击。
 
